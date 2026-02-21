@@ -1,0 +1,3 @@
+from anomaly_system import detect_anomalies
+
+detect_anomalies("household_power_consumption_clean.csv")
