@@ -1,25 +1,32 @@
-# AI-Driven Anomaly Detection in Electricity Consumption
+#AI-Driven Anomaly Detection in Electricity Consumption
 
-## Project Overview
+#Project Overview
+
 This project focuses on detecting abnormal electricity consumption patterns using machine learning techniques. The system analyzes historical electricity usage data and identifies unusual consumption behavior that may indicate energy wastage.
 
 The project uses unsupervised anomaly detection methods to analyze electricity consumption data and highlight abnormal usage periods. Additionally, sub-metering data is analyzed to estimate the probable source of electricity wastage.
 
+The system has been extended into a full-stack application with a backend API and an interactive frontend dashboard for visualization and analysis.
+
 ---
 
-## Objectives
+#Objectives
+
 - Analyze electricity consumption patterns using data analysis techniques
 - Detect abnormal electricity usage using machine learning
 - Visualize electricity consumption trends and anomalies
 - Estimate possible source of wastage using sub-metering data
+- Provide interactive dashboards for better understanding of energy usage
 - Support energy efficiency and better electricity monitoring
 
 ---
 
-## Dataset
-The project uses a historical electricity consumption dataset from the **UCI Machine Learning Repository**.
+#Dataset
 
-Dataset features include:
+The project uses a historical electricity consumption dataset from the UCI Machine Learning Repository.
+
+#Dataset features include:
+
 - Date
 - Time
 - Global Active Power
@@ -32,92 +39,128 @@ Dataset features include:
 
 ---
 
-## Technologies Used
+#Technologies Used
 
-### Programming Language
+#Programming Language
+
 - Python
+- JavaScript
 
-### Libraries
+#Backend
+
+- FastAPI
+
+#Frontend
+
+- React (Vite)
+- CSS
+
+#Libraries
+
 - Pandas
 - NumPy
-- Scikit-learn
+- Scikit-learn (Isolation Forest)
 - Matplotlib
+- Seaborn
 
-### Development Tools
+#Development Tools
+
 - Jupyter Notebook
 - VS Code
 - GitHub
 
-### Machine Learning Approach
+#Machine Learning Approach
+
 - Unsupervised Learning
 - Isolation Forest (Anomaly Detection)
 
 ---
 
-## System Workflow
+#System Workflow
 
-1. Load electricity consumption dataset  
-2. Perform data exploration and preprocessing  
-3. Convert data into time-series format  
-4. Apply anomaly detection model  
-5. Detect abnormal electricity consumption  
-6. Visualize anomalies and usage patterns  
-7. Analyze sub-metering data to estimate possible source of wastage  
+1. Load electricity consumption dataset
+2. Perform data cleaning and preprocessing
+3. Convert data into time-series format
+4. Resample data into hourly usage for better pattern detection
+5. Apply anomaly detection model (Isolation Forest)
+6. Detect abnormal electricity consumption
+7. Generate insights (peak usage, trends, waste detection)
+8. Visualize results using graphs and dashboard
+9. Analyze sub-metering data to estimate possible source of wastage
 
 ---
 
-## Project Structure
+#Features
 
-```
+- Anomaly detection using Isolation Forest
+- Interactive dashboard for visualization
+- Hourly, daily, and monthly usage analysis
+- Energy waste detection (night vs daytime usage)
+- Sub-metering analysis (Kitchen, Laundry, Heating/AC)
+- Correlation analysis between energy zones
+- Upload dataset and analyze results dynamically
+
+---
+
+#Project Structure
+
 AnomaxR/
 │
-├── 01_data_exploration.ipynb
-├── 01_data_preprocessing.ipynb
-├── anomaly_detection.ipynb
-├── sub_metering_analysis.ipynb
+├── backend/           # FastAPI backend + ML logic
+│   ├── main.py
+│   ├── anomaly_system.py
+│   └── requirements.txt
 │
-├── anomaly_system.py
-├── run.py
+├── frontend/          # React dashboard
+│   ├── src/
+│   ├── public/
+│   └── package.json
+│
+├── notebooks/         # Data exploration & analysis
+│   ├── anomaly_detection.ipynb
+│   ├── data_exploration.ipynb
+│   └── preprocessing.ipynb
+│
+├── uploads/           # Generated plots (ignored)
+├── data/              # Dataset (ignored)
 │
 └── README.md
-```
 
 ---
 
-## Current Progress
+Current Progress
 
-Completed modules:
+#Completed modules:
+
 - Dataset loading
 - Data exploration
 - Data preprocessing
 - Anomaly detection model
 - Visualization of anomalies
+- Backend API development (FastAPI)
+- Frontend dashboard (React)
+- Insights and analysis modules
 
-Work in progress:
-- Sub-metering analysis
-- Result interpretation
-- User interface for dataset upload
+#Work in progress:
+
+- Advanced insight generation
+- UI/UX improvements
+- Enhanced explanation of results
 
 ---
 
-## Future Improvements
-- Develop a web interface for dataset upload
+#Future Improvements
+
+- Real-time electricity monitoring
 - Improve anomaly detection accuracy
-- Extend system for real-time electricity monitoring
-- Integrate with smart meter or IoT systems
+- Advanced AI-based explanation of anomalies
+- Cloud deployment (AWS / Render)
+- Integration with smart meters or IoT systems
 
 ---
 
-## Contributors
-- Yasmin
-- Piyush
-- Payal
-- Aditya
-- Vanshika
+#References
 
----
-
-## References
 - Himeur et al., Artificial Intelligence in Smart Energy Systems: A Review, Springer, 2023
 - Liu et al., Anomalous Electricity Consumption Detection Based on Deep Learning, PeerJ Computer Science, 2023
 - Solís-Villarreal et al., Energy Consumption Outlier Detection Using Artificial Intelligence, MDPI, 2022
