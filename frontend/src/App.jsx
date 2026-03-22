@@ -199,13 +199,13 @@ function MetricCard({ id, label, value, unit, accent, delay = 0 }) {
 }
 
 /* ── STAT BAR ────────────────────────────────────────────────────────────── */
-function StatBar({ label, value, max, color }) {
+function StatBar({ label, value, max, color, labelColor }) {
   const realPct    = (value / max) * 100;
   const displayPct = Math.max(Math.min(realPct, 100), 2);
   return (
     <div>
       <div className="stat-bar-label">
-        <span>{label}</span>
+        <span style={labelColor ? { color: labelColor } : {}}>{label}</span>
         <span style={{ color }}>{realPct < 1 ? realPct.toFixed(2) : realPct.toFixed(1)}%</span>
       </div>
       <div className="stat-bar-track">
@@ -228,7 +228,7 @@ function HourlyBarChart({ hourlyData }) {
         const color = pct > 85 ? "#ff6b00" : pct > 60 ? "#ffcc00" : "#00d4ff";
         return (
           <div className="hourly-bar-row" key={hour}>
-            <div className="hourly-bar-hour">{String(hour).padStart(2, "0")}:00</div>
+            <div className="hourly-bar-hour" style={{ color: "var(--text-bright)" }}>{String(hour).padStart(2, "0")}:00</div>
             <div className="hourly-bar-track">
               <div className="hourly-bar-fill"
                 style={{ "--target-width": `${Math.max(pct, 1)}%`, width: `${Math.max(pct, 1)}%`, background: color, boxShadow: `0 0 5px ${color}66`, animationDelay: `${hour * 0.025}s` }} />
@@ -417,9 +417,9 @@ function DashboardTab({ result }) {
                 : "Elevated anomaly rate — review device activity."}
             </div>
             <div>
-              <StatBar label="NORMAL READINGS" value={100 - parseFloat(result.anomaly_percentage)} max={100} color="#00ff88" />
-              <StatBar label="ANOMALY EVENTS"  value={parseFloat(result.anomaly_percentage)}       max={100} color="#ff6b00" />
-              <StatBar label="DATA INTEGRITY"  value={100 - parseFloat(result.anomaly_percentage)} max={100} color="#00d4ff" />
+              <StatBar label="NORMAL READINGS" value={100 - parseFloat(result.anomaly_percentage)} max={100} color="#00ff88" labelColor="var(--text-bright)" />
+              <StatBar label="ANOMALY EVENTS"  value={parseFloat(result.anomaly_percentage)}       max={100} color="#ff6b00" labelColor="var(--text-bright)" />
+              <StatBar label="DATA INTEGRITY"  value={100 - parseFloat(result.anomaly_percentage)} max={100} color="#00d4ff" labelColor="var(--text-bright)" />
             </div>
           </div>
         </div>
@@ -512,21 +512,24 @@ function AnalysisTab({ result }) {
   const effColor = result.efficiency_score > 70 ? "#00ff88" : result.efficiency_score > 40 ? "#ffcc00" : "#ff6b00";
   return (
     <>
-      <div className="section-header"><div className="section-label">Deep Analysis</div><div className="section-line" /></div>
+      <div className="section-header">
+        <div className="section-label" style={{ color: "var(--text-bright)" }}>Deep Analysis</div>
+        <div className="section-line" />
+      </div>
 
       <div className="analysis-cards">
         <div className="analysis-card" style={{ "--card-accent": effColor }}>
-          <div className="analysis-card-label">Efficiency Score</div>
+          <div className="analysis-card-label" style={{ color: "var(--text-bright)" }}>Efficiency Score</div>
           <div className="analysis-card-value" style={{ color: effColor }}>{result.efficiency_score}%</div>
           <div className="analysis-card-desc">{result.efficiency_msg}</div>
         </div>
         <div className="analysis-card" style={{ "--card-accent": "#ffcc00" }}>
-          <div className="analysis-card-label">High Usage Events</div>
+          <div className="analysis-card-label" style={{ color: "var(--text-bright)" }}>High Usage Events</div>
           <div className="analysis-card-value" style={{ color: "#ffcc00" }}>{result.high_usage_count}</div>
           <div className="analysis-card-desc">Readings above mean + 1 std deviation threshold</div>
         </div>
         <div className="analysis-card" style={{ "--card-accent": result.waste_score > 50 ? "#ff6b00" : "#00ff88" }}>
-          <div className="analysis-card-label">Night Waste Score</div>
+          <div className="analysis-card-label" style={{ color: "var(--text-bright)" }}>Night Waste Score</div>
           <div className="analysis-card-value" style={{ color: result.waste_score > 50 ? "#ff6b00" : "#00ff88" }}>{result.waste_score}%</div>
           <div className="analysis-card-desc">Night usage as % of daytime usage</div>
         </div>
@@ -535,9 +538,9 @@ function AnalysisTab({ result }) {
       <div className="panel">
         <div className="panel-header"><div className="panel-title">Efficiency Breakdown</div><div className="panel-badge">SCORING</div></div>
         <div className="panel-body">
-          <StatBar label="ENERGY EFFICIENCY" value={result.efficiency_score} max={100} color={effColor} />
-          <StatBar label="WASTE SCORE" value={Math.min(result.waste_score, 100)} max={100} color={result.waste_score > 50 ? "#ff6b00" : "#00ff88"} />
-          <StatBar label="ANOMALY RATE" value={parseFloat(result.anomaly_percentage)} max={100} color="#ff6b00" />
+          <StatBar label="ENERGY EFFICIENCY" value={result.efficiency_score} max={100} color={effColor} labelColor="var(--text-bright)" />
+          <StatBar label="WASTE SCORE" value={Math.min(result.waste_score, 100)} max={100} color={result.waste_score > 50 ? "#ff6b00" : "#00ff88"} labelColor="var(--text-bright)" />
+          <StatBar label="ANOMALY RATE" value={parseFloat(result.anomaly_percentage)} max={100} color="#ff6b00" labelColor="var(--text-bright)" />
         </div>
       </div>
 
@@ -554,17 +557,17 @@ function AnalysisTab({ result }) {
           <div className="panel-body">
             <div className="wastage-box">
               <div className="wastage-item">
-                <div className="wastage-item-label">Peak Waste Hour</div>
+                <div className="wastage-item-label" style={{ color: "var(--text-bright)" }}>Peak Waste Hour</div>
                 <div className="wastage-item-value">{result.wastage.peak_waste_hour}:00</div>
                 <div className="wastage-item-desc">Hour with highest abnormal load</div>
               </div>
               <div className="wastage-item">
-                <div className="wastage-item-label">Main Source</div>
+                <div className="wastage-item-label" style={{ color: "var(--text-bright)" }}>Main Source</div>
                 <div className="wastage-item-value">{result.wastage.main_source}</div>
                 <div className="wastage-item-desc">Zone contributing most to high-usage events</div>
               </div>
               <div className="wastage-item" style={{ flex: 2 }}>
-                <div className="wastage-item-label">Summary</div>
+                <div className="wastage-item-label" style={{ color: "var(--text-bright)" }}>Summary</div>
                 <div className="wastage-item-desc" style={{ fontSize: 13, marginTop: 8 }}>{result.wastage.message}</div>
               </div>
             </div>
@@ -580,7 +583,7 @@ function AnalysisTab({ result }) {
               .sort((a, b) => Number(a[0]) - Number(b[0]))
               .map(([hour, count]) => (
                 <StatBar key={hour} label={`HOUR ${String(hour).padStart(2, "0")}:00`}
-                  value={count} max={Math.max(...Object.values(result.anomaly_hour_distribution))} color="#ff6b00" />
+                  value={count} max={Math.max(...Object.values(result.anomaly_hour_distribution))} color="#ff6b00" labelColor="var(--text-bright)" />
               ))}
           </div>
         </div>
@@ -601,13 +604,16 @@ function SubmeteringTab({ result }) {
 
   return (
     <>
-      <div className="section-header"><div className="section-label">Submetering Analysis</div><div className="section-line" /></div>
+      <div className="section-header">
+        <div className="section-label" style={{ color: "var(--text-bright)" }}>Submetering Analysis</div>
+        <div className="section-line" />
+      </div>
 
       {/* ── ZONE TOTALS (3 cards, no unmetered) ─────────────────────────── */}
       <div className="sub-zone-cards">
         {zones.map(z => (
           <div key={z.label} className="sub-zone-card" style={{ "--zone-accent": z.accent }}>
-            <div className="sub-zone-label">{z.label}</div>
+            <div className="sub-zone-label" style={{ color: "var(--text-bright)" }}>{z.label}</div>
             <div className="sub-zone-value" style={{ color: z.accent }}>
               {result[z.totKey] !== undefined
                 ? Number(result[z.totKey]).toLocaleString(undefined, { maximumFractionDigits: 1 })
