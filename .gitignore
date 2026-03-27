@@ -1,6 +1,7 @@
 *.csv
 *.xls
 *.pyc
+*.txt
 __pycache__/
 __pycache__
 uploads
@@ -9,3 +10,4 @@ node_modules/
 .ipynb_checkpoints/
 outputs/
 data/
+Anomax/data/household_power_consumption.txt
