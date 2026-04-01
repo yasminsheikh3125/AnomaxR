@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback, Fragment } from "react";
 
-const GOOGLE_CLIENT_ID = "756646026903-3ojj3rscc89a2201hq36njlmql0ls9a8.apps.googleusercontent.com";
+const GOOGLE_CLIENT_ID = "756646026903-c14h9piq2f3e8394avsmkjhlipsbipff.apps.googleusercontent.com";
 
 /* ═══════════════════════════════════════════════════════════════════════════
    GLOBAL CSS
