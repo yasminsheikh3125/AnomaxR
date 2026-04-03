@@ -1,6 +1,9 @@
+import Home from "./home.jsx";
+import "./home.css";
+
 import { useState, useEffect, useRef, useCallback, Fragment } from "react";
 
-const GOOGLE_CLIENT_ID = "756646026903-3ojj3rscc89a2201hq36njlmql0ls9a8.apps.googleusercontent.com";
+const GOOGLE_CLIENT_ID = "756646026903-c14h9piq2f3e8394avsmkjhlipsbipff.apps.googleusercontent.com";
 
 const CSS = `
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&family=Bebas+Neue&display=swap');
@@ -31,7 +34,6 @@ html,body,#root{width:100%;height:100%;margin:0;padding:0}
   --t1:#2c1a08;--t2:#5a3a1c;--t3:#9a6c44;--t4:#e8d4b4;
 }
 
-/* base font size 14px everywhere */
 body{background:var(--base);font-family:var(--font);color:var(--t1);overflow-x:hidden;transition:background 0.35s,color 0.35s;font-size:14px;line-height:1.5;}
 
 ::-webkit-scrollbar{width:3px;height:3px}::-webkit-scrollbar-track{background:transparent}
@@ -51,7 +53,6 @@ body{background:var(--base);font-family:var(--font);color:var(--t1);overflow-x:h
 @keyframes tabIn{from{opacity:0;transform:translateX(16px)}to{opacity:1;transform:translateX(0)}}
 @keyframes boltFlash{0%,90%,100%{opacity:0}95%{opacity:1}}
 
-/* ── MESH BG — orbs only, NO grid ── */
 .mesh-bg{
   position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;
   background:radial-gradient(ellipse 120% 80% at 15% 20%,rgba(249,115,22,0.05) 0%,transparent 60%),
@@ -71,7 +72,6 @@ body{background:var(--base);font-family:var(--font);color:var(--t1);overflow-x:h
 
 .app{display:flex;min-height:100vh;position:relative;z-index:1}
 
-/* ══ SIDEBAR ══════════════════════════════════════════ */
 .sidebar{
   width:var(--sidebar-w);flex-shrink:0;
   background:rgba(26,18,8,0.96);border-right:1px solid var(--border);
@@ -110,7 +110,6 @@ body{background:var(--base);font-family:var(--font);color:var(--t1);overflow-x:h
 
 .sb-nav{flex:1;padding:8px 12px;overflow-y:auto;}
 .sb-nav-label{font-size:9px;font-weight:700;color:var(--t3);letter-spacing:2px;text-transform:uppercase;padding:10px 10px 6px;}
-/* nav items 14px */
 .sb-item{
   display:flex;align-items:center;gap:10px;padding:11px 12px;
   border-radius:var(--r2);color:var(--t3);font-size:14px;font-weight:500;
@@ -118,7 +117,6 @@ body{background:var(--base);font-family:var(--font);color:var(--t1);overflow-x:h
 }
 .sb-item svg{width:16px;height:16px;flex-shrink:0;transition:all 0.2s;}
 .sb-item:hover{background:var(--surface2);color:var(--t1);}
-/* thicker active indicator: 3px */
 .sb-item.active{background:var(--orange-dim);color:var(--orange);border:1px solid rgba(249,115,22,0.22);}
 .sb-item.active svg{filter:drop-shadow(0 0 4px var(--orange));}
 .sb-item.active::before{content:'';position:absolute;left:0;top:20%;bottom:20%;width:3px;background:var(--orange);border-radius:0 2px 2px 0;box-shadow:0 0 8px var(--orange);}
@@ -143,7 +141,6 @@ body{background:var(--base);font-family:var(--font);color:var(--t1);overflow-x:h
 
 .main{flex:1;display:flex;flex-direction:column;min-width:0;overflow:auto;}
 
-/* ══ TOPBAR ════════════════════════════════════════════ */
 .topbar{
   display:flex;align-items:center;justify-content:space-between;
   padding:0 36px;height:62px;border-bottom:1px solid var(--border);
@@ -165,7 +162,6 @@ body{background:var(--base);font-family:var(--font);color:var(--t1);overflow-x:h
 .content{padding:32px 36px;flex:1;min-height:0;}
 .tab-page{animation:tabIn 0.3s cubic-bezier(0.22,1,0.36,1) both;}
 
-/* ══ SECTION HEADER ════════════════════════════════════ */
 .sec-head{display:flex;align-items:center;gap:14px;margin-bottom:26px;}
 .sec-head-title{font-family:var(--display);font-size:24px;letter-spacing:1px;color:var(--t1);white-space:nowrap;}
 .sec-head-line{flex:1;height:1px;background:linear-gradient(90deg,var(--border2),transparent);}
@@ -173,7 +169,6 @@ body{background:var(--base);font-family:var(--font);color:var(--t1);overflow-x:h
 
 .cards-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:24px;}
 
-/* ══ METRIC CARD ═══════════════════════════════════════ */
 .metric-card{
   background:var(--surface);border:1px solid var(--border);border-radius:var(--r);
   padding:24px;position:relative;overflow:hidden;cursor:default;
@@ -186,19 +181,16 @@ body{background:var(--base);font-family:var(--font);color:var(--t1);overflow-x:h
 .mc-label{font-size:11px;font-weight:600;color:var(--t3);letter-spacing:0.5px;text-transform:uppercase;}
 .mc-icon{width:36px;height:36px;border-radius:var(--r2);display:flex;align-items:center;justify-content:center;background:var(--c-dim,var(--orange-dim));border:1px solid var(--c-glow,var(--orange-glow));}
 .mc-value{font-family:var(--display);font-size:52px;line-height:1;color:var(--c,var(--orange));letter-spacing:1px;text-shadow:0 0 30px var(--c-glow,var(--orange-glow));}
-/* sub-labels bigger */
 .mc-sub{font-size:12px;color:var(--t3);font-family:var(--mono);margin-top:8px;letter-spacing:0.5px;}
 .mc-bar{height:2px;background:var(--surface3);border-radius:1px;margin-top:16px;overflow:hidden;}
 .mc-bar-fill{height:100%;border-radius:1px;background:linear-gradient(90deg,var(--c,var(--orange)),var(--c2,#fbbf24));animation:barGrow 1.2s cubic-bezier(0.22,1,0.36,1) both;}
 
-/* ══ PANEL ═════════════════════════════════════════════ */
 .panel{
   background:var(--surface);border:1px solid var(--border);border-radius:var(--r);
   margin-bottom:16px;overflow:hidden;
   animation:fadeUp 0.5s cubic-bezier(0.22,1,0.36,1) both;
   transition:background 0.35s,border-color 0.35s;
 }
-/* taller panel headers */
 .panel-head{
   display:flex;align-items:center;justify-content:space-between;
   padding:16px 22px;border-bottom:1px solid var(--border);
@@ -207,10 +199,8 @@ body{background:var(--base);font-family:var(--font);color:var(--t1);overflow-x:h
 .panel-title{font-size:14px;font-weight:600;color:var(--t1);display:flex;align-items:center;gap:8px;}
 .panel-title-dot{width:6px;height:6px;border-radius:50%;background:var(--orange);box-shadow:0 0 8px var(--orange);}
 .panel-badge{font-size:9px;font-family:var(--mono);color:var(--t3);background:var(--surface3);padding:3px 8px;border-radius:4px;border:1px solid var(--border);}
-/* panel body text 14px */
 .panel-body{padding:22px;font-size:14px;}
 
-/* ══ STAT BAR — labels 12px ════════════════════════════ */
 .stat-row{margin-bottom:14px;}
 .stat-header{display:flex;justify-content:space-between;font-size:12px;margin-bottom:6px;}
 .stat-header-label{color:var(--t2);font-weight:500;}
@@ -222,7 +212,6 @@ body{background:var(--base);font-family:var(--font);color:var(--t1);overflow-x:h
 
 .insight-flex{display:flex;gap:20px;align-items:flex-start;}
 .insight-graph{flex:1.4;}
-/* insight text 14px */
 .insight-text{flex:1;font-size:14px;line-height:1.8;color:var(--t2);}
 .insight-text strong{color:var(--t1);}
 .insight-kv{display:flex;flex-direction:column;gap:6px;margin-top:12px;}
@@ -293,7 +282,6 @@ body{background:var(--base);font-family:var(--font);color:var(--t1);overflow-x:h
 .wastage-val{font-family:var(--display);font-size:28px;color:var(--orange);letter-spacing:1px;line-height:1;}
 .wastage-desc{font-size:12px;color:var(--t3);margin-top:6px;line-height:1.5;}
 
-/* ══ LOGIN ═════════════════════════════════════════════ */
 .login-root{
   min-height:100vh;display:flex;align-items:center;justify-content:center;
   background:radial-gradient(ellipse 100% 80% at 50% 0%,rgba(249,115,22,0.08) 0%,transparent 70%),var(--base);
@@ -324,14 +312,12 @@ body{background:var(--base);font-family:var(--font);color:var(--t1);overflow-x:h
 .g-btn:hover{background:var(--surface3);border-color:var(--orange-glow);box-shadow:0 0 20px rgba(249,115,22,0.1);}
 .login-terms{font-size:11px;color:var(--t3);text-align:center;line-height:1.7;}
 
-/* ══ HOME TAB ══════════════════════════════════════════ */
 .home-hero{
   background:linear-gradient(135deg,rgba(249,115,22,0.07),rgba(253,186,116,0.03),transparent);
   border:1px solid var(--border);border-radius:var(--r);padding:32px 36px;
   margin-bottom:24px;position:relative;overflow:hidden;
   animation:fadeUp 0.4s cubic-bezier(0.22,1,0.36,1) both;
 }
-/* SVG icon floats instead of ⚡ emoji */
 .home-hero-bg-icon{position:absolute;right:36px;top:50%;transform:translateY(-50%);opacity:0.055;animation:float 4s ease-in-out infinite;pointer-events:none;}
 .home-hero-greet{font-size:12px;font-family:var(--mono);color:var(--orange);letter-spacing:2px;text-transform:uppercase;margin-bottom:6px;}
 .home-hero-name{font-family:var(--display);font-size:42px;letter-spacing:1px;color:var(--t1);line-height:1;}
@@ -349,10 +335,8 @@ body{background:var(--base);font-family:var(--font);color:var(--t1);overflow-x:h
 .home-stat-val{font-family:var(--display);font-size:38px;color:var(--sv,var(--orange));letter-spacing:1px;text-shadow:0 0 20px var(--sg,var(--orange-glow));line-height:1;}
 .home-stat-sub{font-size:11px;color:var(--t3);margin-top:4px;}
 
-/* home grid: left=quick actions, right=panels */
 .home-grid{display:grid;grid-template-columns:300px 1fr;gap:20px;align-items:start;}
 
-/* ── QUICK ACTIONS ─────────────────────────────────── */
 .qa-wrap{display:flex;flex-direction:column;gap:10px;}
 .qa-section-label{font-size:9px;font-weight:700;color:var(--t3);letter-spacing:2px;text-transform:uppercase;padding:0 2px 10px;border-bottom:1px solid var(--border);margin-bottom:2px;}
 .qa-card{
@@ -379,10 +363,8 @@ body{background:var(--base);font-family:var(--font);color:var(--t1);overflow-x:h
 .qa-arrow{color:var(--t3);flex-shrink:0;transition:transform 0.2s,color 0.2s;}
 .qa-card:hover .qa-arrow{transform:translateX(4px);color:var(--qa-c,var(--orange));}
 
-/* ── HISTORY TABLE — bigger rows ─────────────────── */
 .history-table{width:100%;border-collapse:collapse;}
 .history-table th{padding:11px 16px;text-align:left;font-size:10px;font-family:var(--mono);color:var(--t3);letter-spacing:1px;text-transform:uppercase;border-bottom:1px solid var(--border);background:var(--surface2);}
-/* taller rows */
 .history-table td{padding:14px 16px;border-bottom:1px solid var(--border);color:var(--t2);font-size:13px;transition:background 0.15s;}
 .history-table tr:hover td{background:rgba(249,115,22,0.03);}
 .history-table tr:last-child td{border-bottom:none;}
@@ -402,24 +384,6 @@ body{background:var(--base);font-family:var(--font);color:var(--t1);overflow-x:h
 .tl-title{font-size:13px;font-weight:600;color:var(--t1);margin-bottom:2px;}
 .tl-sub{font-size:12px;color:var(--t3);font-family:var(--mono);}
 
-/* Settings kept but only used if someone navigates there from elsewhere */
-.settings-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;animation:fadeUp 0.55s cubic-bezier(0.22,1,0.36,1) both;transition:background 0.35s;}
-.settings-row{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;border-bottom:1px solid var(--border);}
-.settings-row:last-of-type{border-bottom:none;}
-.settings-label{font-size:14px;color:var(--t1);font-weight:500;}
-.settings-desc{font-size:12px;color:var(--t3);margin-top:2px;}
-.settings-input{background:var(--surface2);border:1px solid var(--border2);border-radius:var(--r3);padding:7px 12px;color:var(--t1);font-family:var(--font);font-size:13px;outline:none;width:160px;transition:border-color 0.2s;}
-.settings-input:focus{border-color:var(--orange);}
-.save-btn{margin:12px 20px;padding:9px 20px;background:linear-gradient(135deg,var(--orange),#fbbf24);border:none;border-radius:var(--r3);color:#fff;font-family:var(--font);font-size:13px;font-weight:700;cursor:pointer;transition:all 0.2s;box-shadow:0 4px 16px var(--orange-glow);display:flex;align-items:center;gap:6px;}
-.save-btn:hover{box-shadow:0 6px 24px var(--orange-glow);transform:translateY(-1px);}
-.toggle{position:relative;width:40px;height:22px;flex-shrink:0;}
-.toggle input{opacity:0;width:0;height:0;}
-.toggle-sl{position:absolute;inset:0;background:var(--surface3);border:1px solid var(--border2);border-radius:11px;cursor:pointer;transition:all 0.25s;}
-.toggle-sl::before{content:'';position:absolute;width:16px;height:16px;border-radius:50%;background:#fff;left:2px;top:2px;transition:transform 0.25s;}
-.toggle input:checked + .toggle-sl{background:var(--orange);border-color:var(--orange);box-shadow:0 0 10px var(--orange-glow);}
-.toggle input:checked + .toggle-sl::before{transform:translateX(18px);}
-
-/* ══ UPLOAD TAB ════════════════════════════════════════ */
 .upload-hero{text-align:center;margin-bottom:36px;animation:fadeUp 0.4s cubic-bezier(0.22,1,0.36,1) both;}
 .upload-hero-title{font-family:var(--display);font-size:48px;letter-spacing:2px;color:var(--t1);line-height:1;}
 .upload-hero-title .hi{color:var(--orange);text-shadow:0 0 30px var(--orange-glow);}
@@ -469,7 +433,6 @@ body{background:var(--base);font-family:var(--font);color:var(--t1);overflow-x:h
 .rum-name{flex:1;font-size:13px;color:var(--t1);font-family:var(--mono);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .rum-meta{font-size:11px;color:var(--t3);font-family:var(--mono);}
 
-/* ══ IMPROVED EMPTY STATE ══════════════════════════════ */
 .empty-state{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:60vh;gap:18px;text-align:center;animation:fadeUp 0.4s ease both;}
 .empty-icon{width:80px;height:80px;background:var(--surface);border:1px solid var(--border2);border-radius:50%;display:flex;align-items:center;justify-content:center;}
 .empty-title{font-family:var(--display);font-size:26px;letter-spacing:1px;color:var(--t1);}
@@ -504,7 +467,6 @@ body{background:var(--base);font-family:var(--font);color:var(--t1);overflow-x:h
 .sr.vis{opacity:1;transform:none;}
 `;
 
-/* ── UTILS ── */
 const ZONE_COLORS=["orange","blue","green","red","violet"];
 const ZONE_CSS={
   orange:{c:"var(--orange)",cd:"var(--orange-dim)",cg:"var(--orange-glow)",bc:"var(--orange-dim)",bcc:"var(--orange)",bcb:"rgba(249,115,22,0.2)"},
@@ -612,8 +574,6 @@ function LoginScreen({onLogin,theme,toggleTheme}){
   };
   return(
     <>
-      <style>{CSS}</style>
-      {/* NO mesh-grid div */}
       <div className="mesh-bg"><div className="mesh-orb mesh-orb-1"/><div className="mesh-orb mesh-orb-2"/><div className="mesh-orb mesh-orb-3"/></div>
       <div style={{position:"fixed",top:16,right:16,zIndex:100}}>
         <button className="theme-toggle" onClick={toggleTheme}>
@@ -630,14 +590,14 @@ function LoginScreen({onLogin,theme,toggleTheme}){
             <svg width="18" height="18" viewBox="0 0 18 18"><path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.615z"/><path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z"/><path fill="#FBBC05" d="M3.964 10.71c-.18-.54-.282-1.117-.282-1.71s.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.042l3.007-2.332z"/><path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.958L3.964 6.29C4.672 4.163 6.656 3.58 9 3.58z"/></svg>
             Continue with Google
           </button>
-          <p className="login-terms">Your data stays on your device. No server storage.</p>
+          <p className="login-terms">Group no 29</p>
         </div>
       </div>
     </>
   );
 }
 
-/* ══ HOME TAB — no preferences panel, quick actions instead ═══════════════ */
+/* ══ HOME DASHBOARD TAB ══════════════════════════════ */
 function HomeTab({user,uploads,onDelete,onNav}){
   useScrollReveal();
   const totalUploads=uploads.length;
@@ -646,31 +606,14 @@ function HomeTab({user,uploads,onDelete,onNav}){
   const worstFile=uploads.length>0?uploads.reduce((a,b)=>parseFloat(a.anomalyPct)>parseFloat(b.anomalyPct)?a:b,uploads[0]):null;
 
   const actions=[
-    {
-      label:"Upload Dataset",sub:"Analyze a new energy CSV file",tab:"Upload",
-      color:"var(--orange)",dim:"var(--orange-dim)",
-      icon:<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" strokeWidth="1.75"><path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/></svg>
-    },
-    {
-      label:"Energy Dashboard",sub:"View anomaly overview & plots",tab:"Dashboard",
-      color:"var(--blue)",dim:"var(--blue-dim)",
-      icon:<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" strokeWidth="1.75"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
-    },
-    {
-      label:"Deep Analysis",sub:"Efficiency scores & recommendations",tab:"Analysis",
-      color:"var(--green)",dim:"var(--green-dim)",
-      icon:<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="var(--green)" strokeWidth="1.75"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-    },
-    {
-      label:"Submetering",sub:"Zone-by-zone energy breakdown",tab:"Submetering",
-      color:"var(--violet)",dim:"var(--violet-dim)",
-      icon:<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="var(--violet)" strokeWidth="1.75"><path strokeLinecap="round" strokeLinejoin="round" d="M3.75 3v11.25A2.25 2.25 0 006 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0118 16.5h-2.25m-7.5 0h7.5m-7.5 0l-1 3m8.5-3l1 3m0 0l.5 1.5m-.5-1.5h-9.5m0 0l-.5 1.5"/></svg>
-    },
+    {label:"Upload Dataset",sub:"Analyze a new energy CSV file",tab:"Upload",color:"var(--orange)",dim:"var(--orange-dim)",icon:<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" strokeWidth="1.75"><path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/></svg>},
+    {label:"Energy Dashboard",sub:"View anomaly overview & plots",tab:"Dashboard",color:"var(--blue)",dim:"var(--blue-dim)",icon:<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" strokeWidth="1.75"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>},
+    {label:"Deep Analysis",sub:"Efficiency scores & recommendations",tab:"Analysis",color:"var(--green)",dim:"var(--green-dim)",icon:<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="var(--green)" strokeWidth="1.75"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>},
+    {label:"Submetering",sub:"Zone-by-zone energy breakdown",tab:"Submetering",color:"var(--violet)",dim:"var(--violet-dim)",icon:<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="var(--violet)" strokeWidth="1.75"><path strokeLinecap="round" strokeLinejoin="round" d="M3.75 3v11.25A2.25 2.25 0 006 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0118 16.5h-2.25m-7.5 0h7.5m-7.5 0l-1 3m8.5-3l1 3m0 0l.5 1.5m-.5-1.5h-9.5m0 0l-.5 1.5"/></svg>},
   ];
 
   return(
     <div className="tab-page">
-      {/* HERO — SVG icon, no ⚡ emoji */}
       <div className="home-hero sr">
         <div className="home-hero-bg-icon">
           <svg width="100" height="100" viewBox="0 0 24 24" fill="var(--orange)" stroke="none"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
@@ -680,7 +623,6 @@ function HomeTab({user,uploads,onDelete,onNav}){
         <div className="home-hero-sub">Your energy monitoring overview — last updated just now.</div>
       </div>
 
-      {/* QUICK STATS */}
       <div className="home-stats">
         {[
           {label:"Total Uploads",val:totalUploads,sub:"All time",sv:"var(--orange)",sg:"var(--orange-glow)",delay:0},
@@ -697,26 +639,17 @@ function HomeTab({user,uploads,onDelete,onNav}){
       </div>
 
       <div className="home-grid">
-        {/* LEFT — Quick Actions (replaces settings) */}
         <div className="qa-wrap sr">
           <div className="qa-section-label">Quick Actions</div>
           {actions.map((a,i)=>(
-            <div
-              key={i} className="qa-card"
-              style={{"--qa-c":a.color,"--qa-dim":a.dim}}
-              onClick={()=>onNav(a.tab)}
-            >
+            <div key={i} className="qa-card" style={{"--qa-c":a.color,"--qa-dim":a.dim}} onClick={()=>onNav(a.tab)}>
               <div className="qa-icon">{a.icon}</div>
-              <div className="qa-info">
-                <div className="qa-title">{a.label}</div>
-                <div className="qa-sub">{a.sub}</div>
-              </div>
+              <div className="qa-info"><div className="qa-title">{a.label}</div><div className="qa-sub">{a.sub}</div></div>
               <svg className="qa-arrow" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><polyline points="9 18 15 12 9 6"/></svg>
             </div>
           ))}
         </div>
 
-        {/* RIGHT — Activity + History */}
         <div style={{display:"flex",flexDirection:"column",gap:16}}>
           <div className="panel sr">
             <div className="panel-head">
@@ -728,19 +661,8 @@ function HomeTab({user,uploads,onDelete,onNav}){
                 ?<p style={{color:"var(--t3)",fontSize:14,textAlign:"center",padding:"20px 0"}}>No activity yet. Upload a file to get started.</p>
                 :<div className="timeline">
                   {[...uploads].reverse().slice(0,5).map((u,i)=>{
-                    const sv=severityOf(u.anomalyPct);
-                    const dc=sv==="ok"?"var(--green)":sv==="warn"?"var(--orange)":"var(--red)";
-                    return(
-                      <div className="tl-item" key={i}>
-                        <div className="tl-dot" style={{background:dc+"22",borderColor:dc+"44"}}>
-                          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke={dc} strokeWidth="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-                        </div>
-                        <div className="tl-body">
-                          <div className="tl-title">{u.name}</div>
-                          <div className="tl-sub">{u.date} · {u.records} records · <span style={{color:dc}}>{u.anomalyPct}% anomaly</span></div>
-                        </div>
-                      </div>
-                    );
+                    const sv=severityOf(u.anomalyPct);const dc=sv==="ok"?"var(--green)":sv==="warn"?"var(--orange)":"var(--red)";
+                    return(<div className="tl-item" key={i}><div className="tl-dot" style={{background:dc+"22",borderColor:dc+"44"}}><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke={dc} strokeWidth="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div><div className="tl-body"><div className="tl-title">{u.name}</div><div className="tl-sub">{u.date} · {u.records} records · <span style={{color:dc}}>{u.anomalyPct}% anomaly</span></div></div></div>);
                   })}
                 </div>
               }
@@ -760,16 +682,7 @@ function HomeTab({user,uploads,onDelete,onNav}){
                   <tbody>
                     {[...uploads].reverse().map((u,i)=>{
                       const sv=severityOf(u.anomalyPct);
-                      return(
-                        <tr key={i}>
-                          <td><span className="fname">{u.name.length>24?u.name.slice(0,24)+"…":u.name}</span></td>
-                          <td>{u.date}</td>
-                          <td style={{fontFamily:"var(--mono)"}}>{u.records}</td>
-                          <td style={{fontFamily:"var(--mono)",color:"var(--orange)"}}>{u.anomalyPct}%</td>
-                          <td><span className={`severity-badge sv-${sv}`}>{sv==="ok"?"Normal":sv==="warn"?"Elevated":"High"}</span></td>
-                          <td><button className="del-btn" onClick={()=>onDelete(uploads.length-1-i)}>Delete</button></td>
-                        </tr>
-                      );
+                      return(<tr key={i}><td><span className="fname">{u.name.length>24?u.name.slice(0,24)+"…":u.name}</span></td><td>{u.date}</td><td style={{fontFamily:"var(--mono)"}}>{u.records}</td><td style={{fontFamily:"var(--mono)",color:"var(--orange)"}}>{u.anomalyPct}%</td><td><span className={`severity-badge sv-${sv}`}>{sv==="ok"?"Normal":sv==="warn"?"Elevated":"High"}</span></td><td><button className="del-btn" onClick={()=>onDelete(uploads.length-1-i)}>Delete</button></td></tr>);
                     })}
                   </tbody>
                 </table>
@@ -817,14 +730,11 @@ function UploadTab({uploads,onUploadComplete}){
       xhr.open("POST","http://127.0.0.1:8000/upload");
       xhr.upload.onprogress=e=>{if(e.lengthComputable)setProgress((e.loaded/e.total)*100);};
       xhr.onload=()=>{
-        if(xhr.status===200){
-          const data=JSON.parse(xhr.responseText);setProgress(100);
-          setTimeout(()=>{setLoading(false);setProgress(0);setFile(null);onUploadComplete(data,file);},300);
-        }else{setLoading(false);setProgress(0);alert(`Upload failed: HTTP ${xhr.status}`);}
+        if(xhr.status===200){const data=JSON.parse(xhr.responseText);setProgress(100);setTimeout(()=>{setLoading(false);setProgress(0);setFile(null);onUploadComplete(data,file);},300);}
+        else{setLoading(false);setProgress(0);alert(`Upload failed: HTTP ${xhr.status}`);}
       };
       xhr.onerror=()=>{setLoading(false);setProgress(0);alert("Upload failed. Is the backend running on port 8000?");};
-      xhr.timeout=120000;
-      xhr.ontimeout=()=>{setLoading(false);setProgress(0);alert("Upload timed out. Try again.");};
+      xhr.timeout=120000;xhr.ontimeout=()=>{setLoading(false);setProgress(0);alert("Upload timed out. Try again.");};
       xhr.send(fd);
     }catch(err){setLoading(false);setProgress(0);alert("Something went wrong: "+err.message);}
   };
@@ -835,7 +745,6 @@ function UploadTab({uploads,onUploadComplete}){
         <div className="upload-hero-title">UPLOAD <span className="hi">DATA</span></div>
         <div className="upload-hero-sub">Drop your energy dataset below to begin anomaly detection analysis</div>
       </div>
-
       {!file&&(
         <div ref={dropRef} className={`drop-zone${dragging?" dragging":""}`} onClick={()=>inputRef.current?.click()}>
           <input ref={inputRef} type="file" accept=".csv,.xlsx,.json" style={{display:"none"}} onChange={e=>handleFile(e.target.files[0])}/>
@@ -845,7 +754,6 @@ function UploadTab({uploads,onUploadComplete}){
           <div className="dz-types">{[".CSV",".XLSX",".JSON"].map(t=><span key={t} className="dz-type">{t}</span>)}</div>
         </div>
       )}
-
       {file&&!loading&&(
         <div className="file-preview">
           <div className="fp-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" strokeWidth="1.5"><path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/></svg></div>
@@ -853,27 +761,19 @@ function UploadTab({uploads,onUploadComplete}){
           <button className="fp-clear" onClick={()=>setFile(null)}>✕ Remove</button>
         </div>
       )}
-
       {loading&&(
         <div className="progress-wrap">
           <div className="progress-label"><span>Processing dataset…</span><span style={{color:"var(--orange)"}}>{Math.round(progress)}%</span></div>
           <div className="progress-track"><div className="progress-fill" style={{width:`${progress}%`}}/></div>
         </div>
       )}
-
       <div className="upload-action sr">
-        <button className="upload-main-btn" disabled={!file||loading} onClick={doUpload}>
-          {loading?"ANALYZING…":"ANALYZE DATASET ⚡"}
-        </button>
+        <button className="upload-main-btn" disabled={!file||loading} onClick={doUpload}>{loading?"ANALYZING…":"ANALYZE DATASET ⚡"}</button>
       </div>
-
       {uploads.length>0&&(
         <div className="sr">
           <div className="rum-head">Recent uploads ({uploads.length})</div>
-          {[...uploads].reverse().slice(0,5).map((u,i)=>{
-            const sv=severityOf(u.anomalyPct);const dc=sv==="ok"?"var(--green)":sv==="warn"?"var(--orange)":"var(--red)";
-            return(<div className="rum-item" key={i}><div className="rum-dot" style={{background:dc,boxShadow:`0 0 6px ${dc}`}}/><div className="rum-name">{u.name}</div><div className="rum-meta">{u.anomalyPct}% · {u.date}</div></div>);
-          })}
+          {[...uploads].reverse().slice(0,5).map((u,i)=>{const sv=severityOf(u.anomalyPct);const dc=sv==="ok"?"var(--green)":sv==="warn"?"var(--orange)":"var(--red)";return(<div className="rum-item" key={i}><div className="rum-dot" style={{background:dc,boxShadow:`0 0 6px ${dc}`}}/><div className="rum-name">{u.name}</div><div className="rum-meta">{u.anomalyPct}% · {u.date}</div></div>);})}
         </div>
       )}
     </div>
@@ -896,18 +796,7 @@ function DashboardTab({result}){
       </div>
       <div className="panel sr" style={{animationDelay:"0.2s"}}>
         <div className="panel-head"><span className="panel-title"><span className="panel-title-dot"/>System Insight</span><span className="panel-badge">Auto-analysis</span></div>
-        <div className="panel-body">
-          <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:24}}>
-            <div style={{fontSize:14,lineHeight:1.8,color:"var(--t2)"}}>
-              System loaded <strong style={{color:"var(--t1)"}}>{(result.raw_record_count??result.total_data_points).toLocaleString()}</strong> raw records, resampled to <strong style={{color:"var(--t1)"}}>{result.total_data_points.toLocaleString()}</strong> hourly points. <strong style={{color:aColor}}>{result.total_anomalies}</strong> anomalies flagged ({result.anomaly_percentage}%). {pct<5?"Usage appears generally stable.":"Elevated anomaly rate — review device activity."}
-            </div>
-            <div>
-              <StatBar label="Normal readings" value={100-pct} max={100} color="var(--green)" glow="rgba(16,185,129,0.3)"/>
-              <StatBar label="Anomaly events" value={pct} max={100} color="var(--red)" glow="rgba(239,68,68,0.3)"/>
-              <StatBar label="Data integrity" value={100-pct} max={100} color="var(--blue)" glow="var(--blue-glow)"/>
-            </div>
-          </div>
-        </div>
+        <div className="panel-body"><div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:24}}><div style={{fontSize:14,lineHeight:1.8,color:"var(--t2)"}}>System loaded <strong style={{color:"var(--t1)"}}>{(result.raw_record_count??result.total_data_points).toLocaleString()}</strong> raw records, resampled to <strong style={{color:"var(--t1)"}}>{result.total_data_points.toLocaleString()}</strong> hourly points. <strong style={{color:aColor}}>{result.total_anomalies}</strong> anomalies flagged ({result.anomaly_percentage}%). {pct<5?"Usage appears generally stable.":"Elevated anomaly rate — review device activity."}</div><div><StatBar label="Normal readings" value={100-pct} max={100} color="var(--green)" glow="rgba(16,185,129,0.3)"/><StatBar label="Anomaly events" value={pct} max={100} color="var(--red)" glow="rgba(239,68,68,0.3)"/><StatBar label="Data integrity" value={100-pct} max={100} color="var(--blue)" glow="var(--blue-glow)"/></div></div></div>
       </div>
       <div className="panel sr" style={{animationDelay:"0.3s"}}>
         <div className="panel-head"><span className="panel-title"><span className="panel-title-dot"/>Usage Pattern</span><span className="panel-badge">Visual</span></div>
@@ -923,38 +812,12 @@ function InsightsTab({result}){
   return(
     <div className="tab-page">
       <div className="sec-head sr"><span className="sec-head-title">INSIGHTS</span><div className="sec-head-line"/><span className="sec-head-badge">Smart</span></div>
-      <div className="panel sr">
-        <div className="panel-head"><span className="panel-title"><span className="panel-title-dot"/>Peak Usage Analysis</span><span className="panel-badge">AI insight</span></div>
-        <div className="panel-body insight-flex">
-          <div className="insight-graph"><img src={result.hourly_plot} className="graph-img" alt="Hourly"/></div>
-          <div className="insight-text">
-            <p style={{marginBottom:12}}>{result.smart_summary}</p>
-            <div className="insight-kv">
-              <div className="insight-kv-row"><span className="insight-kv-key">Peak hour</span><span className="insight-kv-val">{result.peak_hour}:00</span></div>
-              <div className="insight-kv-row"><span className="insight-kv-key">Lowest hour</span><span className="insight-kv-val">{result.low_hour}:00</span></div>
-              <div className="insight-kv-row"><span className="insight-kv-key">Peak-to-low gap</span><span className="insight-kv-val">{result.usage_gap} kW</span></div>
-            </div>
-            <p style={{marginTop:12,fontSize:13,opacity:0.6}}>{result.peak_reason}</p>
-          </div>
-        </div>
-      </div>
-      <div className="panel sr">
-        <div className="panel-head"><span className="panel-title"><span className="panel-title-dot"/>All 24 Hours</span><span className="panel-badge">kW values</span></div>
-        <div className="panel-body"><HourlyBarChart hourlyData={result.hourly_avg}/></div>
-      </div>
+      <div className="panel sr"><div className="panel-head"><span className="panel-title"><span className="panel-title-dot"/>Peak Usage Analysis</span><span className="panel-badge">AI insight</span></div><div className="panel-body insight-flex"><div className="insight-graph"><img src={result.hourly_plot} className="graph-img" alt="Hourly"/></div><div className="insight-text"><p style={{marginBottom:12}}>{result.smart_summary}</p><div className="insight-kv"><div className="insight-kv-row"><span className="insight-kv-key">Peak hour</span><span className="insight-kv-val">{result.peak_hour}:00</span></div><div className="insight-kv-row"><span className="insight-kv-key">Lowest hour</span><span className="insight-kv-val">{result.low_hour}:00</span></div><div className="insight-kv-row"><span className="insight-kv-key">Peak-to-low gap</span><span className="insight-kv-val">{result.usage_gap} kW</span></div></div><p style={{marginTop:12,fontSize:13,opacity:0.6}}>{result.peak_reason}</p></div></div></div>
+      <div className="panel sr"><div className="panel-head"><span className="panel-title"><span className="panel-title-dot"/>All 24 Hours</span><span className="panel-badge">kW values</span></div><div className="panel-body"><HourlyBarChart hourlyData={result.hourly_avg}/></div></div>
       {[{title:"Daily Trend",badge:"Time series",plot:result.daily_plot,text:result.daily_explanation},{title:"Monthly Trend",badge:"Seasonal",plot:result.monthly_plot,text:result.monthly_explanation}].map((p,i)=>(
-        <div className="panel sr" key={i} style={{animationDelay:`${i*0.1}s`}}>
-          <div className="panel-head"><span className="panel-title"><span className="panel-title-dot"/>{p.title}</span><span className="panel-badge">{p.badge}</span></div>
-          <div className="panel-body insight-flex"><div className="insight-graph"><img src={p.plot} className="graph-img" alt={p.title}/></div><div className="insight-text"><p>{p.text}</p></div></div>
-        </div>
+        <div className="panel sr" key={i} style={{animationDelay:`${i*0.1}s`}}><div className="panel-head"><span className="panel-title"><span className="panel-title-dot"/>{p.title}</span><span className="panel-badge">{p.badge}</span></div><div className="panel-body insight-flex"><div className="insight-graph"><img src={p.plot} className="graph-img" alt={p.title}/></div><div className="insight-text"><p>{p.text}</p></div></div></div>
       ))}
-      <div className="panel sr">
-        <div className="panel-head"><span className="panel-title"><span className="panel-title-dot"/>Night vs Day</span><span className="panel-badge">Waste analysis</span></div>
-        <div className="panel-body">
-          <p style={{fontSize:14,color:"var(--t2)",marginBottom:16}}>Night usage is <strong style={{color:"var(--orange)"}}>{result.waste_score}%</strong> of daytime. {result.waste_score>50?"High night consumption — possible idle appliance wastage.":"Well-balanced day/night usage pattern."}</p>
-          <StatBar label="Night vs Day ratio" value={Math.min(result.waste_score,100)} max={100} color={result.waste_score>50?"var(--red)":"var(--green)"}/>
-        </div>
-      </div>
+      <div className="panel sr"><div className="panel-head"><span className="panel-title"><span className="panel-title-dot"/>Night vs Day</span><span className="panel-badge">Waste analysis</span></div><div className="panel-body"><p style={{fontSize:14,color:"var(--t2)",marginBottom:16}}>Night usage is <strong style={{color:"var(--orange)"}}>{result.waste_score}%</strong> of daytime. {result.waste_score>50?"High night consumption — possible idle appliance wastage.":"Well-balanced day/night usage pattern."}</p><StatBar label="Night vs Day ratio" value={Math.min(result.waste_score,100)} max={100} color={result.waste_score>50?"var(--red)":"var(--green)"}/></div></div>
     </div>
   );
 }
@@ -967,19 +830,13 @@ function AnalysisTab({result}){
   return(
     <div className="tab-page">
       <div className="sec-head sr"><span className="sec-head-title">DEEP ANALYSIS</span><div className="sec-head-line"/><span className="sec-head-badge">Scoring</span></div>
-      <div className="ac-grid">
-        {[{label:"Efficiency Score",val:`${result.efficiency_score}%`,desc:result.efficiency_msg,c:effC,g:effG},{label:"High Usage Events",val:result.high_usage_count,desc:"Readings above mean + 1σ threshold",c:"var(--orange)",g:"var(--orange-glow)"},{label:"Night Waste Score",val:`${result.waste_score}%`,desc:"Night usage as % of daytime",c:result.waste_score>50?"var(--red)":"var(--green)",g:result.waste_score>50?"rgba(239,68,68,0.3)":"rgba(16,185,129,0.25)"}].map((c,i)=>(
-          <div key={i} className="ac-card sr" style={{"--c":c.c,"--c-glow":c.g,animationDelay:`${i*0.08}s`}}><div className="ac-label">{c.label}</div><div className="ac-value"><AnimNum target={c.val}/></div><div className="ac-desc">{c.desc}</div></div>
-        ))}
-      </div>
+      <div className="ac-grid">{[{label:"Efficiency Score",val:`${result.efficiency_score}%`,desc:result.efficiency_msg,c:effC,g:effG},{label:"High Usage Events",val:result.high_usage_count,desc:"Readings above mean + 1σ threshold",c:"var(--orange)",g:"var(--orange-glow)"},{label:"Night Waste Score",val:`${result.waste_score}%`,desc:"Night usage as % of daytime",c:result.waste_score>50?"var(--red)":"var(--green)",g:result.waste_score>50?"rgba(239,68,68,0.3)":"rgba(16,185,129,0.25)"}].map((c,i)=>(
+        <div key={i} className="ac-card sr" style={{"--c":c.c,"--c-glow":c.g,animationDelay:`${i*0.08}s`}}><div className="ac-label">{c.label}</div><div className="ac-value"><AnimNum target={c.val}/></div><div className="ac-desc">{c.desc}</div></div>
+      ))}</div>
       <div className="panel sr"><div className="panel-head"><span className="panel-title"><span className="panel-title-dot"/>Efficiency Breakdown</span><span className="panel-badge">Scoring</span></div><div className="panel-body"><StatBar label="Energy efficiency" value={result.efficiency_score} max={100} color={effC}/><StatBar label="Waste score" value={Math.min(result.waste_score,100)} max={100} color={result.waste_score>50?"var(--red)":"var(--green)"}/><StatBar label="Anomaly rate" value={parseFloat(result.anomaly_percentage)} max={100} color="var(--red)"/></div></div>
       <div className="panel sr"><div className="panel-head"><span className="panel-title"><span className="panel-title-dot"/>Smart Recommendation</span><span className="panel-badge">AI engine</span></div><div className="panel-body"><div className="rec-box"><strong>Recommendation: </strong>{result.recommendation}</div></div></div>
-      {result.wastage&&(
-        <div className="panel sr"><div className="panel-head"><span className="panel-title"><span className="panel-title-dot"/>Wastage Analysis</span><span className="panel-badge">Zone detail</span></div><div className="panel-body"><div className="wastage-grid"><div className="wastage-item"><div className="wastage-label">Peak waste hour</div><div className="wastage-val">{result.wastage.peak_waste_hour}:00</div><div className="wastage-desc">Hour with highest abnormal load</div></div><div className="wastage-item"><div className="wastage-label">Main source</div><div className="wastage-val" style={{fontSize:22}}>{result.wastage.main_source}</div><div className="wastage-desc">Zone contributing most to high-usage events</div></div><div className="wastage-item"><div className="wastage-label">Summary</div><div className="wastage-desc" style={{marginTop:8,fontSize:13}}>{result.wastage.message}</div></div></div></div></div>
-      )}
-      {result.anomaly_hour_distribution&&Object.keys(result.anomaly_hour_distribution).length>0&&(
-        <div className="panel sr"><div className="panel-head"><span className="panel-title"><span className="panel-title-dot"/>Anomaly Hour Distribution</span><span className="panel-badge">Pattern</span></div><div className="panel-body">{Object.entries(result.anomaly_hour_distribution).sort((a,b)=>Number(a[0])-Number(b[0])).map(([h,c])=><StatBar key={h} label={`${String(h).padStart(2,"0")}:00`} value={c} max={Math.max(...Object.values(result.anomaly_hour_distribution))} color="var(--red)"/>)}</div></div>
-      )}
+      {result.wastage&&<div className="panel sr"><div className="panel-head"><span className="panel-title"><span className="panel-title-dot"/>Wastage Analysis</span><span className="panel-badge">Zone detail</span></div><div className="panel-body"><div className="wastage-grid"><div className="wastage-item"><div className="wastage-label">Peak waste hour</div><div className="wastage-val">{result.wastage.peak_waste_hour}:00</div><div className="wastage-desc">Hour with highest abnormal load</div></div><div className="wastage-item"><div className="wastage-label">Main source</div><div className="wastage-val" style={{fontSize:22}}>{result.wastage.main_source}</div><div className="wastage-desc">Zone contributing most to high-usage events</div></div><div className="wastage-item"><div className="wastage-label">Summary</div><div className="wastage-desc" style={{marginTop:8,fontSize:13}}>{result.wastage.message}</div></div></div></div></div>}
+      {result.anomaly_hour_distribution&&Object.keys(result.anomaly_hour_distribution).length>0&&<div className="panel sr"><div className="panel-head"><span className="panel-title"><span className="panel-title-dot"/>Anomaly Hour Distribution</span><span className="panel-badge">Pattern</span></div><div className="panel-body">{Object.entries(result.anomaly_hour_distribution).sort((a,b)=>Number(a[0])-Number(b[0])).map(([h,c])=><StatBar key={h} label={`${String(h).padStart(2,"0")}:00`} value={c} max={Math.max(...Object.values(result.anomaly_hour_distribution))} color="var(--red)"/>)}</div></div>}
     </div>
   );
 }
@@ -992,17 +849,7 @@ function SubmeteringTab({result}){
   return(
     <div className="tab-page">
       <div className="sec-head sr"><span className="sec-head-title">SUBMETERING</span><div className="sec-head-line"/><span className="sec-head-badge">{zoneKeys.length} zones</span></div>
-      <div className="zone-cards">
-        {zoneKeys.map((zone,i)=>{
-          const colName=getZoneColor(i);const cs=ZONE_CSS[colName];
-          const totVal=result[`sub_${zone}`]!==undefined?Number(result[`sub_${zone}`]).toLocaleString(undefined,{maximumFractionDigits:1}):"—";
-          const anomCount=subAnomalies[zone];const hasAnom=anomCount!=null;
-          const anomSv=hasAnom&&anomCount>20?"bad":hasAnom&&anomCount>5?"warn":"ok";
-          const anomColor=anomSv==="ok"?"var(--green)":anomSv==="warn"?"var(--orange)":"var(--red)";
-          const anomDim=anomSv==="ok"?"var(--green-dim)":anomSv==="warn"?"var(--orange-dim)":"var(--red-dim)";
-          return(<div key={zone} className="zone-card sr" style={{"--c":cs.c,"--c-glow":cs.cg,animationDelay:`${i*0.07}s`}}><div className="zone-card-name">{zone}</div><div className="zone-card-val">{totVal}</div><div className="zone-card-sub">Total energy units</div>{hasAnom&&<div className="zone-anom-badge" style={{"--bc":anomDim,"--bcc":anomColor,"--bcb":`${anomColor}40`}}><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke={anomColor} strokeWidth="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/></svg>{anomCount} anomalies</div>}</div>);
-        })}
-      </div>
+      <div className="zone-cards">{zoneKeys.map((zone,i)=>{const colName=getZoneColor(i);const cs=ZONE_CSS[colName];const totVal=result[`sub_${zone}`]!==undefined?Number(result[`sub_${zone}`]).toLocaleString(undefined,{maximumFractionDigits:1}):"—";const anomCount=subAnomalies[zone];const hasAnom=anomCount!=null;const anomSv=hasAnom&&anomCount>20?"bad":hasAnom&&anomCount>5?"warn":"ok";const anomColor=anomSv==="ok"?"var(--green)":anomSv==="warn"?"var(--orange)":"var(--red)";const anomDim=anomSv==="ok"?"var(--green-dim)":anomSv==="warn"?"var(--orange-dim)":"var(--red-dim)";return(<div key={zone} className="zone-card sr" style={{"--c":cs.c,"--c-glow":cs.cg,animationDelay:`${i*0.07}s`}}><div className="zone-card-name">{zone}</div><div className="zone-card-val">{totVal}</div><div className="zone-card-sub">Total energy units</div>{hasAnom&&<div className="zone-anom-badge" style={{"--bc":anomDim,"--bcc":anomColor,"--bcb":`${anomColor}40`}}><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke={anomColor} strokeWidth="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/></svg>{anomCount} anomalies</div>}</div>);})}</div>
       <div className="panel sr"><div className="panel-head"><span className="panel-title"><span className="panel-title-dot"/>Zone Usage Share</span><span className="panel-badge">Distribution</span></div><div className="panel-body insight-flex"><div className="insight-graph"><img src={result.pie_chart} className="graph-img" alt="Pie"/></div><div className="insight-text">{result.sub_pct&&zoneKeys.map((zone,i)=>{const cs=ZONE_CSS[getZoneColor(i)];return<StatBar key={zone} label={zone} value={result.sub_pct[zone]||0} max={100} color={cs.c}/>;})}{result.sub_insight&&<p style={{marginTop:14,fontSize:13,opacity:0.6}}>{result.sub_insight}</p>}</div></div></div>
       {Object.keys(subAnomalies).length>0&&<div className="panel sr"><div className="panel-head"><span className="panel-title"><span className="panel-title-dot"/>Anomalies Per Zone</span><span className="panel-badge">Detection</span></div><div className="panel-body">{Object.entries(subAnomalies).map(([zone,count],i)=><StatBar key={zone} label={zone} value={count} max={Math.max(...Object.values(subAnomalies),1)} color={ZONE_CSS[getZoneColor(i)].c}/>)}</div></div>}
       <div className="panel sr"><div className="panel-head"><span className="panel-title"><span className="panel-title-dot"/>Sub Meter Correlation</span><span className="panel-badge">Heatmap</span></div><div className="panel-body insight-flex"><div className="insight-graph"><img src={result.correlation_plot} className="graph-img" alt="Correlation"/></div><div className="insight-text"><p>The correlation heatmap shows how usage patterns between zones relate. High values mean two zones tend to be active at the same times.</p>{result.correlation_insight&&<p style={{marginTop:12,fontSize:13,opacity:0.6}}>{result.correlation_insight}</p>}</div></div></div>
@@ -1021,7 +868,9 @@ const NAV=[
 ];
 const PAGE_TITLES={Home:"Home",Upload:"Upload Data",Dashboard:"Energy Dashboard",Insights:"Usage Insights",Analysis:"Deep Analysis",Submetering:"Submetering"};
 
+/* ══ ROOT APP ═════════════════════════════════════════ */
 export default function App(){
+  const[showHome,setShowHome]=useState(true);
   const[user,setUser]=useState(()=>{try{return JSON.parse(localStorage.getItem("anomax_user")||"null");}catch{return null;}});
   const[result,setResult]=useState(null);
   const[nav,setNav]=useState("Home");
@@ -1032,8 +881,13 @@ export default function App(){
   useEffect(()=>{if(!document.getElementById("gsi")){const s=document.createElement("script");s.id="gsi";s.src="https://accounts.google.com/gsi/client";s.async=true;document.head.appendChild(s);}},[]);
 
   const toggleTheme=()=>setTheme(t=>t==="dark"?"light":"dark");
+
   const login=u=>{setUser(u);localStorage.setItem("anomax_user",JSON.stringify(u));};
-  const signout=()=>{setUser(null);setResult(null);setNav("Home");localStorage.removeItem("anomax_user");};
+  const signout=()=>{
+    setUser(null);setResult(null);setNav("Home");
+    localStorage.removeItem("anomax_user");
+    setShowHome(true); // return to landing page on sign out
+  };
 
   const onUploadComplete=(data,file)=>{
     setResult(data);
@@ -1042,17 +896,40 @@ export default function App(){
   };
   const onDelete=idx=>{const updated=uploads.filter((_,i)=>i!==idx);setUploads(updated);localStorage.setItem("anomax_uploads",JSON.stringify(updated));};
 
-  if(!user)return<LoginScreen onLogin={login} theme={theme} toggleTheme={toggleTheme}/>;
-
-  const needsData=["Dashboard","Insights","Analysis","Submetering"].includes(nav)&&!result;
   const ThemeIcon=()=>theme==="dark"
     ?<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
     :<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>;
 
+  // ── STEP 1: Show landing page (Home.jsx) if not yet dismissed ──
+  if(showHome && !user){
+    return(
+      <>
+        <style>{CSS}</style>
+        <Home
+          onLaunchApp={()=>setShowHome(false)}
+          theme={theme}
+          toggleTheme={toggleTheme}
+        />
+      </>
+    );
+  }
+
+  // ── STEP 2: Show login screen if no user ──
+  if(!user){
+    return(
+      <>
+        <style>{CSS}</style>
+        <LoginScreen onLogin={login} theme={theme} toggleTheme={toggleTheme}/>
+      </>
+    );
+  }
+
+  // ── STEP 3: Show the main app ──
+  const needsData=["Dashboard","Insights","Analysis","Submetering"].includes(nav)&&!result;
+
   return(
     <>
       <style>{CSS}</style>
-      {/* NO mesh-grid div — only orbs */}
       <div className="mesh-bg"><div className="mesh-orb mesh-orb-1"/><div className="mesh-orb mesh-orb-2"/><div className="mesh-orb mesh-orb-3"/></div>
       <div className="app">
         <aside className="sidebar">
@@ -1091,7 +968,6 @@ export default function App(){
               <div className="topbar-pill"><span className="topbar-dot"/><Clock/></div>
             </div>
           </div>
-
           <div className="content">
             {nav==="Home"        &&<HomeTab user={user} uploads={uploads} onDelete={onDelete} onNav={setNav}/>}
             {nav==="Upload"      &&<UploadTab uploads={uploads} onUploadComplete={onUploadComplete}/>}
@@ -1101,9 +977,7 @@ export default function App(){
             {nav==="Submetering" &&result&&<SubmeteringTab result={result}/>}
             {needsData&&(
               <div className="empty-state">
-                <div className="empty-icon">
-                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" strokeWidth="1.5"><path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/></svg>
-                </div>
+                <div className="empty-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" strokeWidth="1.5"><path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/></svg></div>
                 <div className="empty-title">No Dataset Loaded</div>
                 <div className="empty-body">Upload an energy CSV to unlock the <strong style={{color:"var(--orange)"}}>Dashboard</strong>, <strong style={{color:"var(--orange)"}}>Insights</strong>, <strong style={{color:"var(--orange)"}}>Analysis</strong> and <strong style={{color:"var(--orange)"}}>Submetering</strong> views.</div>
                 <button className="empty-btn" onClick={()=>setNav("Upload")}>GO TO UPLOAD ⚡</button>
