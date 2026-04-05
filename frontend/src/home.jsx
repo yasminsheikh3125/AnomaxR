@@ -913,7 +913,7 @@ export default function Home({ onLaunchApp, theme, toggleTheme }) {
               {I.download}<span>Research Paper</span>
             </a>
           </div>
-          <div className="h-footer-copy">© 2026 Anomax · Group No. 29 · Mini Project</div>
+          <div className="h-footer-copy"> Anomax · Group No. 29 · Mini Project</div>
         </div>
       </footer>
     </div>
