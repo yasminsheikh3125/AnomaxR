@@ -16,7 +16,7 @@ const GUIDE = {
 const LINKS = {
   github:"https://github.com/yasminsheikh3125/AnomaxR",
   paper:"./public/reserch-paper.pdf",
-  youtubeWatch:"https://www.youtube.com/watch?v=KqPgVuNlb_4",
+  youtubeWatch:"https://www.youtube.com/watch?v=hTCO49sc8-4",
 };
 
 /*
