@@ -43,7 +43,7 @@ async def upload_file(file: UploadFile = File(...)):
     result = detect_anomalies(file_path)
 
     #  Base URL (keep consistent)
-    BASE_URL = "http://127.0.0.1:8000"
+    BASE_URL = "https://anomaxr.onrender.com"
 
     #  Fix ALL URLs (including nested)
     def convert_paths(obj):
