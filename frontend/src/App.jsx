@@ -727,7 +727,7 @@ function UploadTab({uploads,onUploadComplete}){
     try{
       const fd=new FormData();fd.append("file",file);
       const xhr=new XMLHttpRequest();
-      xhr.open("POST","https://anomaxr.onrender.com/upload");
+      xhr.open("POST","http://127.0.0.1:8000/upload");
       xhr.upload.onprogress=e=>{if(e.lengthComputable)setProgress((e.loaded/e.total)*100);};
       xhr.onload=()=>{
         if(xhr.status===200){const data=JSON.parse(xhr.responseText);setProgress(100);setTimeout(()=>{setLoading(false);setProgress(0);setFile(null);onUploadComplete(data,file);},300);}
