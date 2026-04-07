@@ -4,7 +4,7 @@ const TEAM = [
   { name:"Payal Korde",        role:"Documentation",      img:"./public/payal.jpg",    linkedin:"https://www.linkedin.com/in/payal-korde-9832a9379/",       github:"https://github.com/payalkorde" },
   { name:"Vanshika Kotgirwar", role:"Frontend Developer", img:"./public/vanshika.jpg", linkedin:"https://www.linkedin.com/in/vanshika-kotgirwar-2019182b0/", github:"https://github.com/vanshikakotgirwar02" },
   { name:"Piyush Ladukar",     role:"Backend Developer",  img:"./public/piyush.jpg",   linkedin:"https://www.linkedin.com/in/piyush-ladukar/",              github:"https://github.com/PiyushLadukar" },
-  { name:"Yasmin Sheikh",      role:"Data Scientist",     img:"./public/yasmin.jpeg",  linkedin:"https://www.linkedin.com/in/yasminsheikh1250/",            github:"https://github.com/yasminsheikh3125" },
+  { name:"Yasmin Sheikh",      role:"ML Engineer",     img:"./public/yasmin.jpeg",  linkedin:"https://www.linkedin.com/in/yasminsheikh1250/",            github:"https://github.com/yasminsheikh3125" },
   { name:"Aditya Kanojiya",    role:"Documentation",      img:"./public/aditya.jpg",   linkedin:"https://www.linkedin.com/in/aditya-kanojiya-7a95112a3/",   github:"https://github.com/adityakanojiya120" },
 ];
 const GUIDE = {
@@ -29,10 +29,10 @@ const LINKS = {
   ════════════════════════════════════════════════
 */
 const PREVIEW_CARDS = [
-  { title:"Anomaly Detection Plot",   tag:"anomaly_plot",   accentColor:"#f97316", imgSrc:"" },
-  { title:"Hourly Usage Patterns",    tag:"hourly_plot",    accentColor:"#38bdf8", imgSrc:"" },
-  { title:"Zone Submetering Heatmap", tag:"heatmap",        accentColor:"#10b981", imgSrc:"" },
-  { title:"Monthly Energy Trends",    tag:"monthly_plot",   accentColor:"#a78bfa", imgSrc:"" },
+  { title:"Anomaly Detection Plot",   tag:"anomaly_plot",   accentColor:"#f97316", imgSrc:"./public/anomaly_detection_graph.png" },
+  { title:"Daily Usage Patterns",    tag:"daily_plot",    accentColor:"#38bdf8", imgSrc:"./public/daily_graph.png" },
+  { title:"Monthly Usage Patterns", tag:"monthly_plot",        accentColor:"#10b981", imgSrc:"./public/monthly_graph.png" },
+  { title:"Corelation Graph",    tag:"correlation",   accentColor:"#a78bfa", imgSrc:"./public/correlation_graph.png" },
 ];
 
 function toEmbed(url) {
@@ -345,7 +345,7 @@ const CSS = `
 
 /* Image area */
 .h-graph-img-area{
-  position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;
+  position:relative;width:100%;aspect-ratio:16/8;overflow:hidden;
   background:var(--bg2);
   /* ↓ Shows a subtle gradient placeholder */
   background-image:linear-gradient(135deg,var(--bg2) 0%,var(--bg3) 100%);
@@ -823,7 +823,7 @@ export default function Home({ onLaunchApp, theme, toggleTheme }) {
           </div>
           <div className="h-preview-grid">
             {PREVIEW_CARDS.map((card, i) => {
-              const dimColor  = `${card.accentColor}18`;
+              const dimColor  = `${card.accentColor}16`;
               const bdColor   = `${card.accentColor}30`;
               const glowColor = `${card.accentColor}50`;
               return (
