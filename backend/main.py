@@ -57,3 +57,6 @@ async def upload_file(file: UploadFile = File(...)):
     result = convert_paths(result)
 
     return result
+@app.api_route("/health", methods=["GET", "HEAD"])
+def health():
+    return {"status": "ok"}
